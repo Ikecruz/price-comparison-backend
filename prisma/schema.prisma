@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Model {
+  id Int @id @default(autoincrement())
+
+  brand String @db.VarChar(255)
+  name  String @db.VarChar(255)
+
+  phones Phone[]
+
+  @@map("models")
+}
+
+model Phone {
+  id Int @id @default(autoincrement())
+
+  cellular     String       @db.VarChar(255)
+  image_url    String       @db.VarChar(255)
+  storage      String       @db.VarChar(255)
+  model_id     Int
+  comaparisons Comparison[]
+
+  model Model @relation(fields: [model_id], references: [id])
+
+  @@map("phones")
+}
+
+model Comparison {
+  id Int @id @default(autoincrement())
+
+  name     String @db.VarChar(255)
+  price    Float  @db.Float
+  url      String @db.VarChar(255)
+  phone_id Int
+
+  phone Phone @relation(fields: [phone_id], references: [id])
+
+  @@map("comparisons")
+}

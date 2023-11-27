@@ -7,19 +7,23 @@ import morganMiddleware from './middlewares/morgan.middleware';
 import { logger } from './utils/logger';
 import ErrorMiddleWare from './middlewares/error.middleware';
 import expressListRoutes from "express-list-routes"
+import database from './database';
 
 export default class App {
 
     public app: Application;
     public port: string | number;
+    private database: typeof database;
 
     constructor(routes: Route[]) {
         this.app = express();
         this.port = PORT || 8000;
+        this.database = database;
         this.initializeMiddlewares()
         this.initializeRoutes(routes)
         this.initializeErrorHandling()
         this.listRoutes()
+        this.initializeDatabase()
     }
 
     public listen(): void {
@@ -40,6 +44,20 @@ export default class App {
             this.app.use("/api/v1", route.router)
         })
     }  
+
+    private async initializeDatabase() {
+
+        try {
+
+            await this.database.connect()
+            logger.info(`🛢️ [Database]: Database connected`)
+
+        } catch (error) {
+            logger.error(`🛢️ [Database]: Database connection failed`)
+            console.log(error)
+        }
+
+    }
 
     private initializeErrorHandling() {
         this.app.use(ErrorMiddleWare.handleErrors)
