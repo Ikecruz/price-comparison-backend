@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Route } from "../interfaces/route.interface";
 import MainController from "../controllers/main.controller";
+import { validate } from "../middlewares/validation.middleware";
 
 class MainRoute implements Route {
     public path: string = ""
@@ -17,6 +18,7 @@ class MainRoute implements Route {
 
         this.router.get(
             "/search", 
+            validate,
             this.controller.search
         )
 
