@@ -37,7 +37,7 @@ describe('GET /phone/:id', () => {
 })
 
 describe('GET /search', () => {
-    it('should return 400 if no query is parameters is provided', async () => {
+    it('should return 400 if no query parameters is provided', async () => {
 
         const response = await request(app.app).get("/api/v1/search?")
 
