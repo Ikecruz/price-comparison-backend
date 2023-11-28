@@ -1,8 +1,8 @@
 import App from "./app"
-import TestRoute from "./routes/test.route"
+import MainRoute from "./routes/main.route"
 
 const app = new App([
-    new TestRoute()
+    new MainRoute()
 ])
 
 app.listen()
