@@ -13,20 +13,30 @@ export default class ErrorMiddleWare extends Interceptor {
         super(req, res, next)
     }
 
+    /**
+     * The function handles HTTP errors by logging the error details and sending a response with the
+     * error message and status code.
+     * @param {HttpException} error - The `error` parameter is an instance of the `HttpException`
+     * class, which represents an HTTP error. It contains information about the error, such as the
+     * status code and message.
+     * @param {Request} request - HTTP request object.
+     * @param {Response} response - HTTP response object
+     * @param {NextFunction} next - Express next middleware function
+     */
     static async handleErrors(
         error: HttpException,
-        req: Request,
-        res: Response,
+        request: Request,
+        response: Response,
         next: NextFunction
     ) {
         const status: number = error.status || 500;
         const message: string = error.message || "Something went wrong";
 
         logger.error(
-            `[Error Handler]: Path: ${req.path}, Method: ${req.method}, Status: ${status}, ${message}`
+            `[Error Handler]: Path: ${request.path}, Method: ${request.method}, Status: ${status}, ${message}`
         );
 
-        res.status(status).json({ message })
+        response.status(status).json({ message })
     }
 
 }

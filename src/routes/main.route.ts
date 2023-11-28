@@ -3,6 +3,8 @@ import { Route } from "../interfaces/route.interface";
 import MainController from "../controllers/main.controller";
 import { validate } from "../middlewares/validation.middleware";
 
+/* The MainRoute class sets up and initializes routes for a web application, including a search route
+and a route to get phone details. */
 class MainRoute implements Route {
     public path: string = ""
     public router: Router;

@@ -3,6 +3,12 @@ import Query from "../interfaces/query.interface";
 import HttpException from "../utils/exception";
 import { StatusCodes } from "http-status-codes";
 
+/**
+ * The `validate` function checks if the request query is valid and throws an exception if it is not.
+ * @param {Request} request - HTTP request object.
+ * @param {Response} response - HTTP response object
+ * @param {NextFunction} next - Express next middleware function
+ */
 export const validate = (
     request: Request, 
     response: Response, 

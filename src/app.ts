@@ -26,12 +26,19 @@ export default class App {
         this.initializeDatabase()
     }
 
+    /**
+     * The `listen` function starts the server and logs a message indicating that the server is
+     * running.
+     */
     public listen(): void {
         this.app.listen(this.port, () => {
             logger.info(`📡 [server]: Server is running @ http://localhost:${this.port}`)
         })
     }
 
+    /**
+     * The function initializes and adds various middlewares to the Express app.
+     */
     private initializeMiddlewares(): void {
         this.app.use(express.json());
         this.app.use(cors<Request>());
@@ -39,12 +46,20 @@ export default class App {
         this.app.use(morganMiddleware)
     }
 
+    /**
+     * The function initializes routes by adding them to the app with a base URL of "/api/v1".
+     * @param {Route[]} routes - The `routes` parameter is an array of `Route` objects. Each `Route`
+     * object represents a specific route in the application.
+     */
     private initializeRoutes(routes: Route[]): void {
         routes.forEach(route => {
             this.app.use("/api/v1", route.router)
         })
     }  
 
+    /**
+     * The function initializes a database connection and logs the status of the connection.
+     */
     private async initializeDatabase() {
 
         try {
@@ -59,10 +74,16 @@ export default class App {
 
     }
 
+    /**
+     * The function initializes error handling for the application.
+     */
     private initializeErrorHandling() {
         this.app.use(ErrorMiddleWare.handleErrors)
     }
 
+    /**
+     * Lists all available routes in the Express app
+     */
     private listRoutes() {
         expressListRoutes(
             this.app,

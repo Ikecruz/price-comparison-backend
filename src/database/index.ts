@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+/* The Prisma class is a singleton class that provides a connection to the Prisma client for
+interacting with a database. */
 class Prisma {
 
     private static instance: Prisma;
