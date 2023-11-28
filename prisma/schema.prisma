@@ -28,7 +28,7 @@ model Phone {
   image_url    String       @db.VarChar(255)
   storage      String       @db.VarChar(255)
   model_id     Int
-  comaparisons Comparison[]
+  comparisons Comparison[]
 
   model Model @relation(fields: [model_id], references: [id])
 
