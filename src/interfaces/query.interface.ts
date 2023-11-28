@@ -1,4 +1,4 @@
-export default interface Query {
+export default abstract class Query {
     keyword: string;
     limit?: number
 }
