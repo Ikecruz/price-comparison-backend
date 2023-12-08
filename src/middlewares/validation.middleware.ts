@@ -15,13 +15,6 @@ export const validate = (
     next: NextFunction
 ) => {
 
-    if (!(request.query instanceof Query)) {
-        throw new HttpException(
-            StatusCodes.BAD_REQUEST,
-            "Invalid query data"
-        )
-    }
-
     if (request.query.keyword!.length as number < 1) {
         throw new HttpException(
             StatusCodes.BAD_REQUEST,

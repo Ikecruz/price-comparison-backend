@@ -14,6 +14,20 @@ export default class MainService {
 
     public async search (query: Query) {
 
+        const PAGE_LIMIT = 10;
+
+        const CURRENT_PAGE = Number(query.page) || 1;
+
+        const DATA_COUNT = await this.ormService.phone.count({
+            where: {
+                model: {
+                    name: {
+                        contains: query.keyword
+                    }
+                }
+            }
+        })
+
         const phones = await this.ormService.phone.findMany({
             where: {
                 model: {
@@ -29,7 +43,8 @@ export default class MainService {
                     }
                 }
             },
-            take: query.limit
+            skip: query.page ? PAGE_LIMIT * (query.page - 1) : undefined,
+            take: PAGE_LIMIT,
         })
 
         if (!phones) {
@@ -39,7 +54,11 @@ export default class MainService {
             )
         }
 
-        return phones;
+        return {
+            data: phones,
+            prev: CURRENT_PAGE > 1 ? CURRENT_PAGE - 1 : null,
+            next: Math.round(DATA_COUNT / PAGE_LIMIT) > CURRENT_PAGE ? CURRENT_PAGE + 1 : null
+        };
 
     }
 
