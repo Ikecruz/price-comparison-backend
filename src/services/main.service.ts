@@ -41,6 +41,13 @@ export default class MainService {
                     select: {
                         name: true
                     }
+                },
+                comparisons: {
+                    select: {
+                        name: true,
+                        price: true,
+                        url: true
+                    }
                 }
             },
             skip: query.page ? PAGE_LIMIT * (query.page - 1) : undefined,
@@ -69,6 +76,11 @@ export default class MainService {
                 id
             },
             include: {
+                model: {
+                    select: {
+                        name: true
+                    }
+                },
                 comparisons: {
                     select: {
                         name: true,
