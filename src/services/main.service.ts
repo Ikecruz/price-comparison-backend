@@ -8,10 +8,23 @@ export default class MainService {
 
     private readonly ormService: PrismaClient;
 
+    /**
+     * The constructor initializes the ormService property with a client from the database.
+     */
     constructor () {
         this.ormService = database.getClient();
     }
 
+    /**
+     * The function performs a search for phones based on a given query and returns the results along
+     * with pagination information.
+     * @param {Query} query - The `query` parameter is an object that contains the following
+     * properties: keyword, page
+     * @returns an object with the following properties:
+     * - data: an array of phone objects that match the search query
+     * - prev: the previous page number, or null if there is no previous page
+     * - next: the next page number, or null if there is no next page
+     */
     public async search (query: Query) {
 
         const PAGE_LIMIT = 10;
@@ -69,6 +82,14 @@ export default class MainService {
 
     }
 
+   /**
+    * The function `getPhone` retrieves a phone object from the database based on the provided id and
+    * includes additional information about the phone's model and comparisons, and throws an exception
+    * if the phone is not found.
+    * @param {number} id - The `id` parameter is a number that represents the unique identifier of a
+    * phone. It is used to query the database and retrieve the phone with the matching id.
+    * @returns the phone object that matches the given id.
+    */
     public async getPhone (id: number) {
 
         const phone = await this.ormService.phone.findFirst({
