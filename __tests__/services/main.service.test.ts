@@ -13,9 +13,9 @@ describe('service', () => {
         }
 
         const phones = await mainService.search(query);
-        expect(Array.isArray(phones)).toBe(true);
+        expect(Array.isArray(phones.data)).toBe(true);
         
-        phones.forEach(phone => {
+        phones.data.forEach(phone => {
             expect(phone).toHaveProperty('id')
             expect(phone).toHaveProperty('cellular')
             expect(phone).toHaveProperty('model')
@@ -24,23 +24,23 @@ describe('service', () => {
 
     })
 
-    it('should return an array of not more than 10 phones when limit is set to 10', async () => {
+    it('should return valid pagination pointers (prev, next) when page is set to 2', async () => {
         const query = {
             keyword: "Galaxy",
-            limit: 10
+            page: 2
         }
 
         const phones = await mainService.search(query);
-        expect(Array.isArray(phones)).toBe(true);
+        
+        expect(phones.prev).toBe(1)
+        expect(phones.next).toBe(3)
 
-        phones.forEach(phone => {
+        phones.data.forEach(phone => {
             expect(phone).toHaveProperty('id')
             expect(phone).toHaveProperty('cellular')
             expect(phone).toHaveProperty('model')
             expect(phone).toHaveProperty('storage')
         })
-
-        expect(phones.length).toBeLessThanOrEqual(10);
 
     })
 })

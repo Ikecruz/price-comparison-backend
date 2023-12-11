@@ -37,9 +37,9 @@ describe('GET /phone/:id', () => {
 })
 
 describe('GET /search', () => {
-    it('should return 400 if no query parameters is provided', async () => {
+    it('should return 400 if no keyword is provided', async () => {
 
-        const response = await request(app.app).get("/api/v1/search?")
+        const response = await request(app.app).get("/api/v1/search?keyword")
 
         expect(response.statusCode).toBe(400)
         expect(response.body).toMatchObject({ message: 'Invalid query data' });
